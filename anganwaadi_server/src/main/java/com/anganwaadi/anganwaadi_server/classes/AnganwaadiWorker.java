@@ -1,22 +1,40 @@
 package com.anganwaadi.anganwaadi_server.classes;
 
-import java.util.UUID;
+import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter @Setter @NoArgsConstructor
 public class AnganwaadiWorker {
- 
-    private String workerId;
-    // private List<Patients> lstPatient
-    // private String emergencyContact;
-    private String username;
-    // private String password;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long aww_id; // anganwaadi worker id
+    private String name;
+    private String contact_number;
+    
+    @ManyToOne(targetEntity = Anganwaadi.class)
+    @Setter @Getter
+    private Anganwaadi anganwaadi; // anganwaadi
+    
+    @OneToOne(targetEntity = RegistrationDetails.class)
+    @Setter @Getter
+    private RegistrationDetails regDetails; // registration details
 
-    public AnganwaadiWorker(){
-        this.workerId = UUID.randomUUID().toString();
+
+    public AnganwaadiWorker(String name, String contact_number){
+        this.name = name;
+        this.contact_number = contact_number;
     }
 
-    public String getId(){return workerId;}
+    public void setAnganwaadi(Anganwaadi anganwaadi){
+        this.anganwaadi = anganwaadi;
+    }
 
-    public String getUsername(){return username;}
-
-
+    public void setRegDetails(RegistrationDetails regDetails){
+        this.regDetails = regDetails;
+    }
 }
