@@ -2,8 +2,6 @@ package com.anganwaadi.anganwaadi_server.controller;
 
 import java.util.Optional;
 
-import javax.print.attribute.standard.Media;
-
 import com.anganwaadi.anganwaadi_server.classes.RegistrationDetails;
 import com.anganwaadi.anganwaadi_server.service.RegistrationDetailsService;
 
@@ -41,14 +39,18 @@ public class loginController {
     //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     // }
     @CrossOrigin("http://localhost:8100")
-    public @ResponseBody String checkLogin(@RequestBody HttpEntity<String> request){
+    public @ResponseBody String checkLogin(@RequestBody DTO dto){
 
-        String jsonString = request.getBody();
-System.out.println(jsonString);
-        JSONObject jsonObject = new JSONObject(jsonString);
+        // String jsonString = request.getBody();
+        // System.out.println(jsonString);
 
-        System.out.println(jsonObject.getString("userID"));
-        Optional<RegistrationDetails> regDetails = regService.getDetailsById(jsonObject.getString("userID"));
+        // JSONObject jsonObject = new JSONObject(jsonString);
+
+        System.out.println(dto.getUserID());
+
+        // System.out.println(jsonObject.getString("userID"));
+        // Optional<RegistrationDetails> regDetails = regService.getDetailsById(jsonObject.getString("userID"));
+        Optional<RegistrationDetails> regDetails = regService.getDetailsById(dto.getUserID());
         if (regDetails.isPresent()){
             return "valid";
         }
@@ -56,4 +58,17 @@ System.out.println(jsonString);
         return "invalid";
     }
 
+}
+
+class DTO{
+
+    private String userID;
+
+    public String getUserID(){
+        return userID;
+    }
+
+    public void setUserID(String id){
+        userID = id;
+    }
 }
