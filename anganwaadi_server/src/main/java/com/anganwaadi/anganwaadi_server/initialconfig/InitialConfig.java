@@ -2,7 +2,6 @@ package com.anganwaadi.anganwaadi_server.initialconfig;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 
 import com.anganwaadi.anganwaadi_server.classes.Anganwaadi;
 import com.anganwaadi.anganwaadi_server.classes.AnganwaadiWorker;
@@ -14,9 +13,7 @@ import com.anganwaadi.anganwaadi_server.repositories.RegistrationDetailsReposito
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
