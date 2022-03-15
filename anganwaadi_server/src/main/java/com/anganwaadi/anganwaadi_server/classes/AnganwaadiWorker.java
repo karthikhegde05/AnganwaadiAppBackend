@@ -30,11 +30,11 @@ public class AnganwaadiWorker {
         this.contact_number = contact_number;
     }
 
-    public void setAnganwaadi(Anganwaadi anganwaadi){
-        this.anganwaadi = anganwaadi;
-    }
+    // public void setAnganwaadi(Anganwaadi anganwaadi){
+    //     this.anganwaadi = anganwaadi;
+    // }
 
-    public void setRegDetails(RegistrationDetails regDetails){
-        this.regDetails = regDetails;
-    }
+    // public void setRegDetails(RegistrationDetails regDetails){
+    //     this.regDetails = regDetails;
+    // }
 }

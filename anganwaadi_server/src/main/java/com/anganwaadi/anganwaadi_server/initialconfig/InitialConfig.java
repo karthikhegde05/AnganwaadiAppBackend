@@ -44,12 +44,16 @@ public class InitialConfig {
             worker1.setAnganwaadi(anganwaadi1); worker2.setAnganwaadi(anganwaadi1);
             worker3.setAnganwaadi(anganwaadi1);
     
-            anganwaadiWorkerRepository.saveAll(List.of(worker1, worker2, worker3));
             anganwaadiRepository.save(anganwaadi1);
     
             registrationDetRepository.saveAll(List.of(regWorker1, regWorker2, regWorker3)); 
+            anganwaadiWorkerRepository.saveAll(List.of(worker1, worker2, worker3));
+
         };
     }
 
+    public static void main(String[] args) {
+        
+    }
     
 }
