@@ -12,7 +12,7 @@ public class AnganwaadiWorker {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long aww_id; // anganwaadi worker id
+    private Long awwId; // anganwaadi worker id
     private String name;
     private String contact_number;
     
@@ -29,12 +29,4 @@ public class AnganwaadiWorker {
         this.name = name;
         this.contact_number = contact_number;
     }
-
-    // public void setAnganwaadi(Anganwaadi anganwaadi){
-    //     this.anganwaadi = anganwaadi;
-    // }
-
-    // public void setRegDetails(RegistrationDetails regDetails){
-    //     this.regDetails = regDetails;
-    // }
 }
