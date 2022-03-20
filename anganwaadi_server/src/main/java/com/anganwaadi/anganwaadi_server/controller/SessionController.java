@@ -12,6 +12,7 @@ import com.anganwaadi.anganwaadi_server.service.RegistrationDetailsService;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +75,7 @@ public class SessionController {
                 // fetch the loggedWorker details and send the aww_id across
                 this.loggedWorker = findLoggedAngWorker(details);
 
+
                 sendResult = new SendWorkerIdDTO("valid", loggedWorker.getAwwId());
             }
             
@@ -86,9 +88,6 @@ public class SessionController {
 
         return sendResult;
     }
-
-
-
 
 }
 

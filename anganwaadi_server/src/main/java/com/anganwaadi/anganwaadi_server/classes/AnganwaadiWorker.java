@@ -14,7 +14,7 @@ public class AnganwaadiWorker {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long awwId; // anganwaadi worker id
     private String name;
-    private String contact_number;
+    private String contactNumber;
     
     @ManyToOne(targetEntity = Anganwaadi.class)
     @Setter @Getter
@@ -25,8 +25,8 @@ public class AnganwaadiWorker {
     private RegistrationDetails regDetails; // registration details
 
 
-    public AnganwaadiWorker(String name, String contact_number){
+    public AnganwaadiWorker(String name, String contactNumber){
         this.name = name;
-        this.contact_number = contact_number;
+        this.contactNumber = contactNumber;
     }
 }
