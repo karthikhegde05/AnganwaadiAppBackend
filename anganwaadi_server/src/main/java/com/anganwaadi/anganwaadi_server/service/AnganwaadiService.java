@@ -6,23 +6,22 @@ import java.util.Optional;
 import com.anganwaadi.anganwaadi_server.classes.Anganwaadi;
 import com.anganwaadi.anganwaadi_server.repositories.AnganwaadiRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
-// @RequiredArgsConstructor
+@RequiredArgsConstructor
 public class AnganwaadiService {
     
     @NonNull
     private final AnganwaadiRepository anganwaadiRepository;
 
-    @Autowired
-    public AnganwaadiService(AnganwaadiRepository anganwaadiRepository){
-        this.anganwaadiRepository = anganwaadiRepository;
-    }
+    // @Autowired
+    // public AnganwaadiService(AnganwaadiRepository anganwaadiRepository){
+    //     this.anganwaadiRepository = anganwaadiRepository;
+    // }
 
     public List<Anganwaadi> getAllAnganwaadi(){
         return anganwaadiRepository.findAll();
@@ -33,7 +32,7 @@ public class AnganwaadiService {
     }    
 
     public void saveAnganwaadi(Anganwaadi anganwaadi){
-        anganwaadiRepository.save(anganwaadi);
+        anganwaadiRepository.saveAndFlush(anganwaadi);
     }
 
     public void deleteAnganwaadi(Long id){

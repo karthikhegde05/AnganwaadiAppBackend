@@ -1,5 +1,7 @@
 package com.anganwaadi.anganwaadi_server.classes;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import lombok.Getter;
@@ -17,12 +19,13 @@ public class AnganwaadiWorker {
     private String contactNumber;
     
     @ManyToOne(targetEntity = Anganwaadi.class)
-    @Setter @Getter
     private Anganwaadi anganwaadi; // anganwaadi
     
     @OneToOne(targetEntity = RegistrationDetails.class)
-    @Setter @Getter
     private RegistrationDetails regDetails; // registration details
+
+    @OneToMany(targetEntity = Followup.class)
+    private List<Followup> lstFollowups; 
 
 
     public AnganwaadiWorker(String name, String contactNumber){
