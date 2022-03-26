@@ -1,0 +1,35 @@
+package com.anganwaadi.anganwaadi_server.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.anganwaadi.anganwaadi_server.classes.AnganwaadiWorker;
+import com.anganwaadi.anganwaadi_server.classes.FollowUp;
+import com.anganwaadi.anganwaadi_server.repositories.FollowUpRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Service;
+
+import lombok.NonNull;
+
+@Service
+public class FollowUpService {
+    
+    @NonNull
+    private final FollowUpRepository followUpRepository;
+
+    @Autowired
+    public FollowUpService(FollowUpRepository followUpRepository){
+        this.followUpRepository = followUpRepository;
+    }
+
+    public void testInsert(FollowUp followUp){
+        followUpRepository.save(followUp);
+    }
+
+    
+    public List<FollowUp> sync(AnganwaadiWorker id, LocalDateTime t){
+        return followUpRepository.findByAnganwaadiWorkerAndCreatedDateGreaterThan(id, t);
+    }
+}
