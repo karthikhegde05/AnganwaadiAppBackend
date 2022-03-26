@@ -128,7 +128,7 @@ class FollowUpDTO{
         this.completed = followUp.getCompleted();
         this.createdDate =followUp.getCreatedDate();
 
-        this.workerId = followUp.getAnganwaadiWorker().getAww_id();
+        this.workerId = followUp.getAnganwaadiWorker().getAwwId();
     }
 }
 

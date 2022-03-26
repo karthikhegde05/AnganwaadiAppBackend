@@ -13,7 +13,7 @@ public class Anganwaadi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long aw_id;
+    private Long awId;
     private String address;
     private String location; // City/location
 
