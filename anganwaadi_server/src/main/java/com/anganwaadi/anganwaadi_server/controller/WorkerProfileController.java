@@ -103,7 +103,7 @@ public class WorkerProfileController {
                 folDto.setPatientId(fo.getDischargeSummary().getPatient().getSAMID());
                 folDto.setDeadlineDate(fo.getDeadlineDate());
                 folDto.setCompletedDate(fo.getCompletedDate());
-                folDto.setHasCompeleted(fo.getHasCompeleted());
+                folDto.setHasCompleted(fo.getHasCompleted());
 
                 lstFolObj.addToLstFollowups(folDto);
             }
@@ -154,7 +154,7 @@ public class WorkerProfileController {
             folDto.setPatientId(fo.getDischargeSummary().getPatient().getSAMID());
             folDto.setDeadlineDate(fo.getDeadlineDate());
             folDto.setCompletedDate(fo.getCompletedDate());
-            folDto.setHasCompeleted(fo.getHasCompeleted());
+            folDto.setHasCompleted(fo.getHasCompleted());
             
             patientProfileObj.addToLstFollowups(folDto);
         }
@@ -187,14 +187,16 @@ public class WorkerProfileController {
 
         healthStatService.saveHealthStatus(nwHs);
 
-        fol.get().setHealthStatus(nwHs);
+        // fol.get().setHealthStatus(nwHs);
 
         // followupService.deleteFollowup(givenFollowupId);
-        fol.get().setFollowupId(givenFollowupId);
-        fol.get().setHasCompeleted(true);
+        // fol.get().setFollowupId(givenFollowupId);
+        // fol.get().setHasCompleted(true);
         LocalDate curDate = LocalDate.now();
-        fol.get().setCompletedDate(Date.valueOf(curDate));
-        followupService.saveFollowup(fol.get());
+        Date nwDate = Date.valueOf(curDate);
+        int ret = followupService.updateFollowup(givenFollowupId, true, nwDate, nwHs.getHSID());
+
+        System.out.println(ret);
 
         validForm.setResult(true);
 
@@ -225,7 +227,7 @@ class FollowupDTO{
     private Long followupId;
     private Date deadlineDate;
     private Date completedDate;
-    private Boolean hasCompeleted;
+    private Boolean hasCompleted;
     private Long patientId;
 }
 

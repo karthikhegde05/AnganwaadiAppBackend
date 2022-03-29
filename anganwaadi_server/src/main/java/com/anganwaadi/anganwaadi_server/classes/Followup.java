@@ -18,7 +18,7 @@ public class Followup {
     private Long FollowupId;
     private Date deadlineDate;
     private Date completedDate;
-    private Boolean hasCompeleted;
+    private Boolean hasCompleted;
 
     // link one to one health status objects
     @OneToOne(targetEntity = HealthStatus.class)
@@ -29,7 +29,7 @@ public class Followup {
 
     public Followup(Date deadline){
         this.deadlineDate = deadline;
-        this.hasCompeleted = false;
+        this.hasCompleted = false;
     }
 
 }

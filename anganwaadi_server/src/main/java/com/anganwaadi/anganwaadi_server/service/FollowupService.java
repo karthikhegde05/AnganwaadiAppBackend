@@ -1,10 +1,14 @@
 package com.anganwaadi.anganwaadi_server.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import com.anganwaadi.anganwaadi_server.classes.DischargeSummary;
 import com.anganwaadi.anganwaadi_server.classes.Followup;
+import com.anganwaadi.anganwaadi_server.classes.HealthStatus;
 import com.anganwaadi.anganwaadi_server.repositories.FollowupRepository;
 
 import org.springframework.stereotype.Service;
@@ -37,5 +41,10 @@ public class FollowupService {
 
     public void deleteFollowup(Long id){
         followupRepository.deleteById(id);
+    }
+
+    @Transactional
+    public int updateFollowup(Long id, boolean hasCompleted, Date completedDate, Long hsId){
+        return followupRepository.updateFollowupByDateAndHS(id, hasCompleted, completedDate, hsId);
     }
 }
