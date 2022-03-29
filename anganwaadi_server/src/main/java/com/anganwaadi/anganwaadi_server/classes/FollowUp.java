@@ -6,8 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 import lombok.Getter;
@@ -18,20 +20,32 @@ import lombok.Setter;
 @Data @NoArgsConstructor
 public class FollowUp {
     
+    @SequenceGenerator(
+		name = "followup_sequence",
+		sequenceName = "followup_sequence",
+		allocationSize = 1
+	)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "followup_sequence"
+	)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long follow_up_id;
+    private Long followupId;
     
-    private Long SAM_ID;
+    @ManyToOne
+    @JoinColumn(name = "sam_id")
+    private Patient patient;
     
-    @ManyToOne(targetEntity = AnganwaadiWorker.class)
+    @ManyToOne(targetEntity = AnganwadiWorker.class)
+    @JoinColumn(name = "aww_id")
     @Setter @Getter
-    private AnganwaadiWorker anganwaadiWorker;
+    private AnganwadiWorker anganwaadiWorker;
 
     private LocalDateTime deadline_date;
     private LocalDateTime completed_date;
 
     @OneToOne(targetEntity = HealthStatus.class)
+    @JoinColumn(name = "hs_id")
     @Setter @Getter
     private HealthStatus healthStatus;
 
@@ -39,9 +53,9 @@ public class FollowUp {
 
     private LocalDateTime createdDate;
 
-    public FollowUp(Long SAM_ID, LocalDateTime deadline_date, LocalDateTime completed_date,
+    public FollowUp(Patient patient, LocalDateTime deadline_date, LocalDateTime completed_date,
     HealthStatus healthStatus, Boolean completed, LocalDateTime createdDate){
-        this.SAM_ID=SAM_ID;
+        this.patient=patient;
         this.deadline_date=deadline_date;
         this.completed_date=completed_date;
         this.healthStatus=healthStatus;

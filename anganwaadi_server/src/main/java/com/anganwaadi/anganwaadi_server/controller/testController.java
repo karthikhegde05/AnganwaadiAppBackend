@@ -1,18 +1,24 @@
 package com.anganwaadi.anganwaadi_server.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.websocket.server.PathParam;
 
-import com.anganwaadi.anganwaadi_server.classes.AnganwaadiWorker;
+import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
 import com.anganwaadi.anganwaadi_server.classes.FollowUp;
 import com.anganwaadi.anganwaadi_server.classes.HealthStatus;
+import com.anganwaadi.anganwaadi_server.classes.Patient;
+import com.anganwaadi.anganwaadi_server.repositories.PatientRepository;
 import com.anganwaadi.anganwaadi_server.service.AnganwaadiService;
 import com.anganwaadi.anganwaadi_server.service.AnganwaadiWorkerService;
 import com.anganwaadi.anganwaadi_server.service.FollowUpService;
+import com.anganwaadi.anganwaadi_server.service.HealthStatusService;
+import com.anganwaadi.anganwaadi_server.service.PatientService;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,38 +44,77 @@ public class testController {
     
     private FollowUpService followUpService;
     private AnganwaadiWorkerService anganwaadiWorkerService;
+    private PatientService patientService;
+    private HealthStatusService healthStatusService;
 
-    public testController(FollowUpService followUpService, AnganwaadiWorkerService anganwaadiWorkerService){
+    public testController(FollowUpService followUpService, 
+        AnganwaadiWorkerService anganwaadiWorkerService,
+        PatientService patientService,
+        HealthStatusService healthStatusService){
         this.followUpService = followUpService;
         this.anganwaadiWorkerService = anganwaadiWorkerService;
+        this.patientService = patientService;
+        this.healthStatusService = healthStatusService;
     }
 
     @PostMapping(value= "/insertfollowup")
     @CrossOrigin("http://localhost:8100")
-    public @ResponseBody String insertFollowUp(@RequestBody FollowUpDTO followUp){
+    public @ResponseBody String insertFollowUp(@RequestBody FollowUpDTO followUpDto){
 
-        FollowUp f = new FollowUp(
-            followUp.getSamId(),
-            followUp.getDeadline(),
-            followUp.getCompletedOn(),
-        null,
-            followUp.getCompleted(),
-            followUp.getCreatedDate()
-            );
+        HealthStatus healthStatus = new HealthStatus();
+
+        Patient patient = patientService.getPatientById(followUpDto.getSamId()).get();
+
+        FollowUp followUp = new FollowUp(patient,
+            followUpDto.getCreatedDate(), 
+            followUpDto.getCompleted_date(), 
+            healthStatus,
+            followUpDto.getCompleted(), 
+            followUpDto.getCreatedDate());
 
         
-        Optional<AnganwaadiWorker> a = anganwaadiWorkerService.getWorkerById(followUp.getWorkerId());
+        Optional<AnganwadiWorker> a = anganwaadiWorkerService.getWorkerById(followUpDto.getWorkerId());
         
         if(!a.isPresent()){
             return "false";
         }
         
-        AnganwaadiWorker aww = a.get();
-        f.setAnganwaadiWorker(aww);
+        AnganwadiWorker aww = a.get();
+        followUp.setAnganwaadiWorker(aww);
 
-        followUpService.testInsert(f);
+        healthStatus.setPatient(patient);
+        healthStatusService.saveHealthStatus(healthStatus);
+        followUpService.testInsert(followUp);
 
         return "true";
+
+    }
+
+    @PostMapping(value="/insertpatient")
+    public @ResponseBody String insertPatient(@RequestBody PatientDTO patientDto){
+
+        Patient patient = new Patient(
+            patientDto.getUhId(),
+            patientDto.getRchId(),
+            patientDto.getName(),
+            patientDto.getAge(),
+            patientDto.getDob(),
+            patientDto.getGender(),
+            patientDto.getAddress(),
+            patientDto.getCity(),
+            patientDto.getContactNumber(),
+            patientDto.getRelationshipStatus(),
+            patientDto.getCaste(),
+            patientDto.getReligion(),
+            patientDto.getBpl(), 
+            patientDto.getReferredBy()
+        );
+
+        patient.setLastUpdated(LocalDateTime.now());
+
+        patientService.savePatient(patient);
+
+        return "success";
 
     }
 
@@ -104,11 +149,11 @@ class FollowUpDTO{
     private Long followupId;
     private Long samId;
 
-    private LocalDateTime deadline;
-    private LocalDateTime completedOn;
+    private LocalDateTime deadline_date;
+    private LocalDateTime completed_date;
 
     @Setter @Getter
-    private HealthStatus healthStatus;
+    private HealthStatusDTO healthStatus;
 
     private Boolean completed;
 
@@ -118,17 +163,62 @@ class FollowUpDTO{
 
     public FollowUpDTO(FollowUp followUp){
 
-        this.followupId = followUp.getFollow_up_id();
-        this.samId = followUp.getSAM_ID();
-        this.deadline = followUp.getDeadline_date();
-        this.completedOn = followUp.getCompleted_date();
+        this.followupId = followUp.getFollowupId();
+        this.samId = followUp.getPatient().getSamId();
+        this.deadline_date = followUp.getDeadline_date();
+        this.completed_date = followUp.getCompleted_date();
 
-        this.healthStatus = followUp.getHealthStatus();
+        this.healthStatus = new HealthStatusDTO(followUp.getHealthStatus());
 
         this.completed = followUp.getCompleted();
         this.createdDate =followUp.getCreatedDate();
 
         this.workerId = followUp.getAnganwaadiWorker().getAwwId();
     }
+}
+
+@Data
+@NoArgsConstructor
+class PatientDTO{
+
+    private String uhId;
+    private String rchId;
+    private String name;
+    private Integer age;
+    private LocalDate dob;
+    private String gender;
+    private String address;
+    private String city;
+    private String contactNumber;
+    private String relationshipStatus;
+    private String caste;
+    private String religion;
+    private Boolean bpl;
+    private String referredBy;
+}
+
+@Data
+class HealthStatusDTO{
+
+    private Long hsId;
+    private float height;
+    private float weight;
+    private float muac;
+    private String growthStatus;
+    private String otherSymptoms;
+    private LocalDate date;
+    private Long sam_id;
+
+    public HealthStatusDTO(HealthStatus h){
+        this.hsId = h.getHsId();
+        this.height = h.getHeight();
+        this.weight = h.getWeight();
+        this.muac = h.getMuac();
+        this.growthStatus = h.getGrowthStatus();
+        this.otherSymptoms = h.getOtherSymptoms();
+        this.date = h.getDate();
+        this.sam_id = null;
+    }
+
 }
 

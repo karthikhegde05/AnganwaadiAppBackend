@@ -10,9 +10,18 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class RegistrationDetails {
     
+    @SequenceGenerator(
+		name = "registration_details_sequence",
+		sequenceName = "registration_details_sequence",
+		allocationSize = 1
+	)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "registration_details_sequence"
+	)
     @Id
     private String userId;
-    
+
     private String email;
     private String firstName;
     private String lastName;

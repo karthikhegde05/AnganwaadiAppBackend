@@ -3,7 +3,7 @@ package com.anganwaadi.anganwaadi_server.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.anganwaadi.anganwaadi_server.classes.AnganwaadiWorker;
+import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
 import com.anganwaadi.anganwaadi_server.classes.FollowUp;
 import com.anganwaadi.anganwaadi_server.repositories.FollowUpRepository;
 
@@ -29,7 +29,7 @@ public class FollowUpService {
     }
 
     
-    public List<FollowUp> sync(AnganwaadiWorker id, LocalDateTime t){
+    public List<FollowUp> sync(AnganwadiWorker id, LocalDateTime t){
         return followUpRepository.findByAnganwaadiWorkerAndCreatedDateGreaterThan(id, t);
     }
 }

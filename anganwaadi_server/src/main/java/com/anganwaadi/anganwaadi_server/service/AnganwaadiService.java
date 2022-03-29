@@ -3,7 +3,7 @@ package com.anganwaadi.anganwaadi_server.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.anganwaadi.anganwaadi_server.classes.Anganwaadi;
+import com.anganwaadi.anganwaadi_server.classes.Anganwadi;
 import com.anganwaadi.anganwaadi_server.repositories.AnganwaadiRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +24,15 @@ public class AnganwaadiService {
         this.anganwaadiRepository = anganwaadiRepository;
     }
 
-    public List<Anganwaadi> getAllAnganwaadi(){
+    public List<Anganwadi> getAllAnganwaadi(){
         return anganwaadiRepository.findAll();
     }
 
-    public Optional<Anganwaadi> getAnganwaadiById(Long aw_id){
+    public Optional<Anganwadi> getAnganwaadiById(Long aw_id){
         return anganwaadiRepository.findById(aw_id);
     }    
 
-    public void saveAnganwaadi(Anganwaadi anganwaadi){
+    public void saveAnganwaadi(Anganwadi anganwaadi){
         anganwaadiRepository.save(anganwaadi);
     }
 

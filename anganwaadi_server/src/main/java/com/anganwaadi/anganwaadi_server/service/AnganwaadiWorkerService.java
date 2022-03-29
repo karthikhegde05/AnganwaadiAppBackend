@@ -3,7 +3,7 @@ package com.anganwaadi.anganwaadi_server.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.anganwaadi.anganwaadi_server.classes.AnganwaadiWorker;
+import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
 import com.anganwaadi.anganwaadi_server.repositories.AnganwaadiWorkerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,15 @@ public class AnganwaadiWorkerService {
         this.anganwaadiWorkerRepository = anganwaadiWorkerRepository;
     }
 
-    public List<AnganwaadiWorker> getAllWorkers(){
+    public List<AnganwadiWorker> getAllWorkers(){
         return anganwaadiWorkerRepository.findAll();
     }
 
-    public Optional<AnganwaadiWorker> getWorkerById(Long aww_id){
+    public Optional<AnganwadiWorker> getWorkerById(Long aww_id){
         return anganwaadiWorkerRepository.findById(aww_id);
     }    
 
-    public void saveWorker(AnganwaadiWorker worker){
+    public void saveWorker(AnganwadiWorker worker){
         anganwaadiWorkerRepository.save(worker);
     }
 
