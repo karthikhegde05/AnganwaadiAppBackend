@@ -1,5 +1,6 @@
 package com.anganwaadi.anganwaadi_server.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,23 @@ public class PatientService {
 
     public void deletePatient(Long samId){
         patientRepository.deleteById(samId);
+    }
+
+    //get patient samId if it was updated after lastUpdate
+    public Patient getIfUpdated(Long samId, LocalDateTime lastUpdate){
+
+        Optional<Patient> patient = patientRepository.findById(samId);
+
+        if(patient.isEmpty()){
+            return null;
+        }
+
+        if( lastUpdate.isBefore( patient.get().getLastUpdated()) ){
+            return patient.get();
+        }
+        
+
+        return null;
     }
 
 }

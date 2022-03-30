@@ -57,7 +57,6 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<DischargeSummary> dischargeSummaries; 
 
-    // @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastUpdated;
 
     public Patient(String uhid, String Rchid, String name, Integer age, LocalDate dob, String gender,

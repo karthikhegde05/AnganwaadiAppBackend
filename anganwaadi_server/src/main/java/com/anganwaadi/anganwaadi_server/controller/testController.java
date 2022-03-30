@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.websocket.server.PathParam;
 
 import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
+import com.anganwaadi.anganwaadi_server.classes.DischargeSummary;
 import com.anganwaadi.anganwaadi_server.classes.FollowUp;
 import com.anganwaadi.anganwaadi_server.classes.HealthStatus;
 import com.anganwaadi.anganwaadi_server.classes.Patient;
@@ -181,6 +182,7 @@ class FollowUpDTO{
 @NoArgsConstructor
 class PatientDTO{
 
+    private Long samId;
     private String uhId;
     private String rchId;
     private String name;
@@ -195,6 +197,33 @@ class PatientDTO{
     private String religion;
     private Boolean bpl;
     private String referredBy;
+    private LocalDateTime last_updated;
+    
+    private List<DischargeSummary> dischargeSummaries;
+    private List<FollowUpDTO> followups;
+
+    public PatientDTO(Patient patient){
+        this.samId = patient.getSamId();
+        this.uhId = patient.getUhId();
+        this.rchId = patient.getRchId();
+        this.name = patient.getName();
+        this.age = patient.getAge();
+        this.dob = patient.getDob();
+        this.gender = patient.getGender();
+        this.address = patient.getAddress();
+        this.city = patient.getCity();
+        this.contactNumber = patient.getContactNumber();
+        this.relationshipStatus = patient.getRelationshipStatus();
+        this.caste = patient.getCaste();
+        this.religion = patient.getReligion();
+        this.bpl = patient.getBPL();
+        this.referredBy = patient.getReferredBy();
+        this.last_updated = patient.getLastUpdated();
+
+        this.dischargeSummaries = new ArrayList<>();
+        this.followups = new ArrayList<>();
+    }
+
 }
 
 @Data

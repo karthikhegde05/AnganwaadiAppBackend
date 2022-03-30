@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
 import com.anganwaadi.anganwaadi_server.classes.FollowUp;
+import com.anganwaadi.anganwaadi_server.classes.Patient;
 import com.anganwaadi.anganwaadi_server.repositories.FollowUpRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,9 @@ public class FollowUpService {
     
     public List<FollowUp> sync(AnganwadiWorker id, LocalDateTime t){
         return followUpRepository.findByAnganwaadiWorkerAndCreatedDateGreaterThan(id, t);
+    }
+
+    public List<FollowUp> getNewFollowUps(Patient p, LocalDateTime t){
+        return followUpRepository.findByPatientAndCreatedDateGreaterThanAndCompletedIsTrue(p, t);
     }
 }
