@@ -104,7 +104,6 @@ public class WorkerProfileController {
                 folDto.setDeadlineDate(fo.getDeadlineDate());
                 folDto.setCompletedDate(fo.getCompletedDate());
                 folDto.setHasCompleted(fo.getHasCompleted());
-
                 lstFolObj.addToLstFollowups(folDto);
             }
 
@@ -155,7 +154,7 @@ public class WorkerProfileController {
             folDto.setDeadlineDate(fo.getDeadlineDate());
             folDto.setCompletedDate(fo.getCompletedDate());
             folDto.setHasCompleted(fo.getHasCompleted());
-            
+            folDto.setGender(patient.get().getGender());
             patientProfileObj.addToLstFollowups(folDto);
         }
         
@@ -229,6 +228,7 @@ class FollowupDTO{
     private Date completedDate;
     private Boolean hasCompleted;
     private Long patientId;
+    private String gender;
 }
 
 // receive DTO
