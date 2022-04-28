@@ -34,7 +34,7 @@ public class Patient {
     private String name;
     private Integer age;
     private LocalDate dob;
-    private String gender;
+    private Character gender;
     private String address;
     private String city;
     private String contactNumber;
@@ -43,6 +43,7 @@ public class Patient {
     private String religion;
     private Boolean BPL;
     private String referredBy;
+    private String symptoms;
 
     // link one to many health status while admision
     // link one to many discharge summary while discharges
@@ -59,7 +60,7 @@ public class Patient {
 
     private LocalDateTime lastUpdated;
 
-    public Patient(String uhid, String Rchid, String name, Integer age, LocalDate dob, String gender,
+    public Patient(String uhid, String Rchid, String name, Integer age, LocalDate dob, Character gender,
     String address, String city, String contactNumber, String relStatus, String caste, 
     String religion, Boolean bpl, String referredBy){
         this.uhId = uhid;

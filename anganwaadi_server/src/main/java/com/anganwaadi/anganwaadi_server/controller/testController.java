@@ -33,11 +33,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.anganwaadi.anganwaadi_server.controller.DTO.*;
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value= "/test")
 // consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +63,7 @@ public class testController {
     }
 
     @PostMapping(value= "/insertfollowup")
-    @CrossOrigin("http://localhost:8100")
+    // @CrossOrigin("http://localhost:8100")
     public @ResponseBody String insertFollowUp(@RequestBody FollowUpDTO followUpDto){
 
         HealthStatus healthStatus = new HealthStatus();
@@ -119,8 +123,8 @@ public class testController {
 
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping(value = "/sync/{aww_id}/{timestamp}")
-    @CrossOrigin("http://localhost:8100")
     public @ResponseBody List<FollowUpDTO> syncFollowUp(@PathVariable("aww_id") Long aww_id, @PathVariable("timestamp") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp){
 
         System.out.println(aww_id);
@@ -143,111 +147,9 @@ public class testController {
 
 }
 
-@Data
-@NoArgsConstructor
-class FollowUpDTO{
 
-    private Long followupId;
-    private Long samId;
 
-    private LocalDateTime deadline_date;
-    private LocalDateTime completed_date;
 
-    @Setter @Getter
-    private HealthStatusDTO healthStatus;
 
-    private Boolean completed;
 
-    private LocalDateTime createdDate;
-
-    private Long workerId;
-
-    public FollowUpDTO(FollowUp followUp){
-
-        this.followupId = followUp.getFollowupId();
-        this.samId = followUp.getPatient().getSamId();
-        this.deadline_date = followUp.getDeadline_date();
-        this.completed_date = followUp.getCompleted_date();
-
-        this.healthStatus = new HealthStatusDTO(followUp.getHealthStatus());
-
-        this.completed = followUp.getCompleted();
-        this.createdDate =followUp.getCreatedDate();
-
-        this.workerId = followUp.getAnganwaadiWorker().getAwwId();
-    }
-}
-
-@Data
-@NoArgsConstructor
-class PatientDTO{
-
-    private Long samId;
-    private String uhId;
-    private String rchId;
-    private String name;
-    private Integer age;
-    private LocalDate dob;
-    private String gender;
-    private String address;
-    private String city;
-    private String contactNumber;
-    private String relationshipStatus;
-    private String caste;
-    private String religion;
-    private Boolean bpl;
-    private String referredBy;
-    private LocalDateTime last_updated;
-    
-    private List<DischargeSummary> dischargeSummaries;
-    private List<FollowUpDTO> followups;
-
-    public PatientDTO(Patient patient){
-        this.samId = patient.getSamId();
-        this.uhId = patient.getUhId();
-        this.rchId = patient.getRchId();
-        this.name = patient.getName();
-        this.age = patient.getAge();
-        this.dob = patient.getDob();
-        this.gender = patient.getGender();
-        this.address = patient.getAddress();
-        this.city = patient.getCity();
-        this.contactNumber = patient.getContactNumber();
-        this.relationshipStatus = patient.getRelationshipStatus();
-        this.caste = patient.getCaste();
-        this.religion = patient.getReligion();
-        this.bpl = patient.getBPL();
-        this.referredBy = patient.getReferredBy();
-        this.last_updated = patient.getLastUpdated();
-
-        this.dischargeSummaries = new ArrayList<>();
-        this.followups = new ArrayList<>();
-    }
-
-}
-
-@Data
-class HealthStatusDTO{
-
-    private Long hsId;
-    private float height;
-    private float weight;
-    private float muac;
-    private String growthStatus;
-    private String otherSymptoms;
-    private LocalDate date;
-    private Long sam_id;
-
-    public HealthStatusDTO(HealthStatus h){
-        this.hsId = h.getHsId();
-        this.height = h.getHeight();
-        this.weight = h.getWeight();
-        this.muac = h.getMuac();
-        this.growthStatus = h.getGrowthStatus();
-        this.otherSymptoms = h.getOtherSymptoms();
-        this.date = h.getDate();
-        this.sam_id = null;
-    }
-
-}
 

@@ -11,6 +11,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
+@Table(name = "discharge_summary")
 public class DischargeSummary {
     
     @SequenceGenerator(

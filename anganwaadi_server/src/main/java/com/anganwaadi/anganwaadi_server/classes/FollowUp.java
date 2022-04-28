@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import lombok.Setter;
 
 @Entity
 @Data @NoArgsConstructor
+@Table(name = "follow_up")
 public class FollowUp {
     
     @SequenceGenerator(
@@ -41,8 +43,8 @@ public class FollowUp {
     @Setter @Getter
     private AnganwadiWorker anganwaadiWorker;
 
-    private LocalDateTime deadline_date;
-    private LocalDateTime completed_date;
+    private LocalDateTime deadlineDate;
+    private LocalDateTime completedDate;
 
     @OneToOne(targetEntity = HealthStatus.class)
     @JoinColumn(name = "hs_id")
@@ -56,8 +58,8 @@ public class FollowUp {
     public FollowUp(Patient patient, LocalDateTime deadline_date, LocalDateTime completed_date,
     HealthStatus healthStatus, Boolean completed, LocalDateTime createdDate){
         this.patient=patient;
-        this.deadline_date=deadline_date;
-        this.completed_date=completed_date;
+        this.deadlineDate=deadline_date;
+        this.completedDate=completed_date;
         this.healthStatus=healthStatus;
         this.completed=completed;
         this.createdDate=createdDate;

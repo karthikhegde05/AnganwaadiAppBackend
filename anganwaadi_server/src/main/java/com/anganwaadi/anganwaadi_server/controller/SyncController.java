@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.anganwaadi.anganwaadi_server.controller.DTO.*;
 
 
 @RestController
@@ -78,27 +79,49 @@ public class SyncController {
     }
 
     @PostMapping(value="/patient/")
-    public @ResponseBody List<PatientDTO>  postMethodName(@RequestBody ListSyncRequest requests) {
+    public @ResponseBody List<PatientDTO>  postMethodName(@RequestBody List<SyncRequest> requests) {
         
         ArrayList<PatientDTO> updates = new ArrayList<>();
 
-        ArrayList<Long> samId = requests.getIds();
-        ArrayList<LocalDateTime> lastUpdate = requests.getLastUpdate();
+        // ArrayList<Long> samId = requests.getIds();
+        // ArrayList<LocalDateTime> lastUpdate = requests.getLastUpdate();
 
-        if(samId.size() != lastUpdate.size()){
-            return null;
-        }
+        // if(samId.size() != lastUpdate.size()){
+        //     return null;
+        // }
 
-        for(int i = 0; i < samId.size(); i++){
+        // for(int i = 0; i < samId.size(); i++){
 
-            Patient patient = patientService.getIfUpdated(samId.get(i), lastUpdate.get(i));
+        //     Patient patient = patientService.getIfUpdated(samId.get(i), lastUpdate.get(i));
             
-            if(patient != null){
+        //     if(patient != null){
                 
+        //         PatientDTO dto = new PatientDTO(patient);
+        //         ArrayList<FollowUpDTO> followupdtos = new ArrayList<>();
+
+        //         for(FollowUp followUp: followUpService.getNewFollowUps(patient, lastUpdate.get(i))){
+        //             followupdtos.add(new FollowUpDTO(followUp));
+        //         }
+
+        //         dto.setFollowups(followupdtos);
+        //         updates.add(dto);
+
+        //     }
+
+            
+
+        // }
+
+        for(SyncRequest request: requests){
+            
+            Patient patient = patientService.getIfUpdated(request.getId(), request.getLastUpdate());
+
+            if(patient != null){
                 PatientDTO dto = new PatientDTO(patient);
                 ArrayList<FollowUpDTO> followupdtos = new ArrayList<>();
 
-                for(FollowUp followUp: followUpService.getNewFollowUps(patient, lastUpdate.get(i))){
+
+                for(FollowUp followUp: followUpService.getNewFollowUps(patient, request.getLastUpdate())){
                     followupdtos.add(new FollowUpDTO(followUp));
                 }
 
@@ -106,8 +129,6 @@ public class SyncController {
                 updates.add(dto);
 
             }
-
-            
 
         }
 
@@ -142,9 +163,17 @@ public class SyncController {
 
 // }
 
-@Data
-class ListSyncRequest{
+// @Data
+// class ListSyncRequest{
 
-    private ArrayList<Long> ids;
-    private ArrayList<LocalDateTime> lastUpdate;
+//     private ArrayList<Long> ids;
+//     private ArrayList<LocalDateTime> lastUpdate;
+// }
+
+@Data
+class SyncRequest{
+
+    private Long id;
+    private LocalDateTime lastUpdate;
+
 }

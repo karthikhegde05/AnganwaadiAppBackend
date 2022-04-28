@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
+@Table(name = "anganwadi_worker")
 public class AnganwadiWorker {
     
     @SequenceGenerator(
@@ -22,12 +23,14 @@ public class AnganwadiWorker {
     @Id
     private Long awwId; // anganwaadi worker id
     private String name;
-    private String contactNumber;
+    private String contactNo;
     
-    @ManyToOne(targetEntity = Anganwadi.class)
-    @JoinColumn(name = "aw_id")
-    @Setter @Getter
-    private Anganwadi anganwadi; // anganwadi
+    // @ManyToOne(targetEntity = Anganwadi.class)
+    // @JoinColumn(name = "aw_id")
+    // @Setter @Getter
+    // private Anganwadi anganwadi; // anganwadi
+    private String address;
+    private String locality;
     
     @OneToOne(targetEntity = RegistrationDetails.class)
     @JoinColumn(name = "user_id")
@@ -37,6 +40,6 @@ public class AnganwadiWorker {
 
     public AnganwadiWorker(String name, String contactNumber){
         this.name = name;
-        this.contactNumber = contactNumber;
+        this.contactNo = contactNumber;
     }
 }
