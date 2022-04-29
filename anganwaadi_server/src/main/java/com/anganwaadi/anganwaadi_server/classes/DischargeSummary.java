@@ -2,6 +2,7 @@ package com.anganwaadi.anganwaadi_server.classes;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -33,7 +34,7 @@ public class DischargeSummary {
     private String outcome;
     private String treatmentProtocol;
 
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
     @ManyToOne(targetEntity = Patient.class)
     @JoinColumn(name = "sam_id")

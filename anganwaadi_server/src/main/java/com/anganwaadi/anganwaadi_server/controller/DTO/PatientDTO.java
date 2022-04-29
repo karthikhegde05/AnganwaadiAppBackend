@@ -33,7 +33,7 @@ class PatientDTO{
     private String referredBy;
     private LocalDateTime last_updated;
     
-    private List<DischargeSummary> dischargeSummaries;
+    private DischargeDTO dischargeSummary;
     private List<FollowUpDTO> followups;
 
     public PatientDTO(Patient patient){
@@ -54,7 +54,7 @@ class PatientDTO{
         this.referredBy = patient.getReferredBy();
         this.last_updated = patient.getLastUpdated();
 
-        this.dischargeSummaries = new ArrayList<>();
+        this.dischargeSummary = null;
         this.followups = new ArrayList<>();
     }
 

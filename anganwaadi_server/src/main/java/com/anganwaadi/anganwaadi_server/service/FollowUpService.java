@@ -1,7 +1,10 @@
 package com.anganwaadi.anganwaadi_server.service;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
 import com.anganwaadi.anganwaadi_server.classes.FollowUp;
@@ -36,5 +39,10 @@ public class FollowUpService {
 
     public List<FollowUp> getNewFollowUps(Patient p, LocalDateTime t){
         return followUpRepository.findByPatientAndCreatedDateGreaterThanAndCompletedIsTrue(p, t);
+    }
+
+    @Transactional
+    public void updateFollowup(Long id ,LocalDate CompletedDate){
+        followUpRepository.updateFollowupById(id, CompletedDate, LocalDateTime.now());
     }
 }

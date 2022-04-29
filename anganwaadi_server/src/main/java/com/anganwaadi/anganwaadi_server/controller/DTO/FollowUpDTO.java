@@ -22,6 +22,9 @@ class FollowUpDTO{
 
     @Setter @Getter
     private HealthStatusDTO healthStatus;
+    // private Long hsId;
+
+
 
     private Boolean completed;
 
@@ -36,7 +39,8 @@ class FollowUpDTO{
         this.deadline_date = followUp.getDeadlineDate();
         this.completed_date = followUp.getCompletedDate();
 
-        // this.healthStatus = new HealthStatusDTO(followUp.getHealthStatus());
+        this.healthStatus = new HealthStatusDTO(followUp.getHealthStatus());
+        // this.hsId = followUp.getHealthStatus().getHsId();
     
 
         this.completed = followUp.getCompleted();

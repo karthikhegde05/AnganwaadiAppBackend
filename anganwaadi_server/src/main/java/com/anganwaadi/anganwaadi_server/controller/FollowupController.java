@@ -54,7 +54,8 @@ public class FollowupController {
             }
 
             HealthStatusDTO h = followup.getValue();
-            healthStatusService.updateHealthStatus(id, h.getHeight(), h.getWeight(), h.getMuac(), h.getGrowthStatus(), h.getOtherSymptoms(), h.getDate());
+            healthStatusService.updateHealthStatus(h.getHsId(), h.getHeight(), h.getWeight(), h.getMuac(), h.getGrowthStatus(), h.getOtherSymptoms(), h.getDate());
+            followUpService.updateFollowup(id, h.getDate());
 
         }
 

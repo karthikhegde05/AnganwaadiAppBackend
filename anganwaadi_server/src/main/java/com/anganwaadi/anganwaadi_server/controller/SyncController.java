@@ -11,6 +11,7 @@ import com.anganwaadi.anganwaadi_server.classes.DischargeSummary;
 import com.anganwaadi.anganwaadi_server.classes.FollowUp;
 import com.anganwaadi.anganwaadi_server.classes.Patient;
 import com.anganwaadi.anganwaadi_server.service.AnganwaadiWorkerService;
+import com.anganwaadi.anganwaadi_server.service.DischargeService;
 import com.anganwaadi.anganwaadi_server.service.FollowUpService;
 import com.anganwaadi.anganwaadi_server.service.HealthStatusService;
 import com.anganwaadi.anganwaadi_server.service.PatientService;
@@ -39,15 +40,18 @@ public class SyncController {
     private AnganwaadiWorkerService anganwaadiWorkerService;
     private PatientService patientService;
     private HealthStatusService healthStatusService;
+    private DischargeService dischargeService;
 
     public SyncController(FollowUpService followUpService, 
         AnganwaadiWorkerService anganwaadiWorkerService,
         PatientService patientService,
-        HealthStatusService healthStatusService){
+        HealthStatusService healthStatusService,
+        DischargeService dischargeService){
         this.followUpService = followUpService;
         this.anganwaadiWorkerService = anganwaadiWorkerService;
         this.patientService = patientService;
         this.healthStatusService = healthStatusService;
+        this.dischargeService = dischargeService;
     }
 
     @GetMapping(value = "/followup/{aww_id}/{timestamp}")
@@ -79,38 +83,10 @@ public class SyncController {
     }
 
     @PostMapping(value="/patient/")
-    public @ResponseBody List<PatientDTO>  postMethodName(@RequestBody List<SyncRequest> requests) {
+    public @ResponseBody List<PatientDTO>  syncPatients(@RequestBody List<SyncRequest> requests) {
         
         ArrayList<PatientDTO> updates = new ArrayList<>();
 
-        // ArrayList<Long> samId = requests.getIds();
-        // ArrayList<LocalDateTime> lastUpdate = requests.getLastUpdate();
-
-        // if(samId.size() != lastUpdate.size()){
-        //     return null;
-        // }
-
-        // for(int i = 0; i < samId.size(); i++){
-
-        //     Patient patient = patientService.getIfUpdated(samId.get(i), lastUpdate.get(i));
-            
-        //     if(patient != null){
-                
-        //         PatientDTO dto = new PatientDTO(patient);
-        //         ArrayList<FollowUpDTO> followupdtos = new ArrayList<>();
-
-        //         for(FollowUp followUp: followUpService.getNewFollowUps(patient, lastUpdate.get(i))){
-        //             followupdtos.add(new FollowUpDTO(followUp));
-        //         }
-
-        //         dto.setFollowups(followupdtos);
-        //         updates.add(dto);
-
-        //     }
-
-            
-
-        // }
 
         for(SyncRequest request: requests){
             
@@ -126,7 +102,11 @@ public class SyncController {
                 }
 
                 dto.setFollowups(followupdtos);
+                DischargeSummary d = dischargeService.getLatestDischarge(patient);
+                dto.setDischargeSummary(new DischargeDTO(d));
+
                 updates.add(dto);
+
 
             }
 
