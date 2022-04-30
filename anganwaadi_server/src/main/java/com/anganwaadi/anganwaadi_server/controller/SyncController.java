@@ -17,6 +17,7 @@ import com.anganwaadi.anganwaadi_server.service.HealthStatusService;
 import com.anganwaadi.anganwaadi_server.service.PatientService;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.anganwaadi.anganwaadi_server.controller.DTO.*;
 
@@ -56,7 +58,14 @@ public class SyncController {
 
     @GetMapping(value = "/followup/{aww_id}/{timestamp}")
     @CrossOrigin("http://localhost:8100")
-    public @ResponseBody List<FollowUpDTO> syncFollowUp(@PathVariable("aww_id") Long aww_id, @PathVariable("timestamp") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp){
+    public @ResponseBody List<FollowUpDTO> syncFollowUp(@PathVariable("aww_id") Long aww_id, @PathVariable("timestamp") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp,
+    @RequestHeader MultiValueMap<String, String> headers) {
+        
+        headers.forEach((key, value) -> {
+            // LOG.info(String.format(
+            //   "Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
+            System.out.println(key + " : " + value);
+        });
 
         System.out.println(aww_id);
         System.out.println(timestamp);
@@ -76,6 +85,8 @@ public class SyncController {
         for(FollowUp i : followups){
             followupdtos.add(new FollowUpDTO(i));
         }
+
+        System.out.println(followupdtos);
 
         return followupdtos;
 

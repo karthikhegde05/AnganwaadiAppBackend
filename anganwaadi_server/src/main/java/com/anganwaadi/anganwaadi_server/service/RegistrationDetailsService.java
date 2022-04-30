@@ -7,6 +7,9 @@ import com.anganwaadi.anganwaadi_server.classes.RegistrationDetails;
 import com.anganwaadi.anganwaadi_server.repositories.RegistrationDetailsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
@@ -14,7 +17,7 @@ import lombok.NonNull;
 
 @Service
 // @RequiredArgsConstructor
-public class RegistrationDetailsService {
+public class RegistrationDetailsService implements UserDetailsService{
     
     @NonNull
     private final RegistrationDetailsRepository registrationDetRepository;
@@ -39,6 +42,12 @@ public class RegistrationDetailsService {
 
     public void deleteWorker(String userId){
         registrationDetRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        
+        return this.registrationDetRepository.getById(username);
     }
 
 
