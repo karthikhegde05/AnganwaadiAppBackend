@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
+import com.anganwaadi.anganwaadi_server.classes.RegistrationDetails;
 import com.anganwaadi.anganwaadi_server.repositories.AnganwaadiWorkerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class AnganwaadiWorkerService {
 
     public List<AnganwadiWorker> getAllWorkers(){
         return anganwaadiWorkerRepository.findAll();
+    }
+
+    public List<AnganwadiWorker> getWorkerByReg(RegistrationDetails r){
+        return anganwaadiWorkerRepository.findByRegDetails(r);
     }
 
     public Optional<AnganwadiWorker> getWorkerById(Long aww_id){

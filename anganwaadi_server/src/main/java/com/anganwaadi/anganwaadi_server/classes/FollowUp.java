@@ -19,7 +19,7 @@ import lombok.Setter;
 
 @Entity
 @Data @NoArgsConstructor
-@Table(name = "follow_up")
+@Table(name = "followup")
 public class FollowUp {
     
     @SequenceGenerator(

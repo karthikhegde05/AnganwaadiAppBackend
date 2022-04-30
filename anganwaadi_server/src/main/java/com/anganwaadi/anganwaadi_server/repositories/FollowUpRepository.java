@@ -21,7 +21,7 @@ public interface FollowUpRepository extends JpaRepository<FollowUp, String>{
 
     @Modifying
     @Query(value=
-    "UPDATE follow_up f " +
+    "UPDATE followup f " +
     "SET f.completed = true, f.completed_date = :date, f.created_date = :datetime " + 
     "WHERE f.followup_id = :Id",
     nativeQuery = true)
