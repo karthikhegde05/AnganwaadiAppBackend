@@ -44,6 +44,8 @@ public class Patient {
     private Boolean BPL;
     private String referredBy;
     private String symptoms;
+    private String nrcName;
+    private String nrcContact;
 
     // link one to many health status while admision
     // link one to many discharge summary while discharges

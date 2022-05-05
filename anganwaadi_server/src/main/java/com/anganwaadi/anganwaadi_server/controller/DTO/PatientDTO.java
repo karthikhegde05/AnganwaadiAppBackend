@@ -32,6 +32,8 @@ class PatientDTO{
     private Boolean bpl;
     private String referredBy;
     private LocalDateTime last_updated;
+    private String nrcName;
+    private String nrcContact;
     
     private DischargeDTO dischargeSummary;
     private List<FollowUpDTO> followups;
@@ -53,6 +55,8 @@ class PatientDTO{
         this.bpl = patient.getBPL();
         this.referredBy = patient.getReferredBy();
         this.last_updated = patient.getLastUpdated();
+        this.nrcName = patient.getNrcName();
+        this.nrcContact = patient.getNrcContact();
 
         this.dischargeSummary = null;
         this.followups = new ArrayList<>();
