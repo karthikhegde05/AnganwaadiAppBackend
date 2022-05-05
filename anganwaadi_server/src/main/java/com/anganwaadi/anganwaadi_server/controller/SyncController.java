@@ -1,6 +1,6 @@
 package com.anganwaadi.anganwaadi_server.controller;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class SyncController {
     private FollowUpService followUpService;
     private AnganwaadiWorkerService anganwaadiWorkerService;
     private PatientService patientService;
-    private HealthStatusService healthStatusService;
+    // private HealthStatusService healthStatusService;
     private DischargeService dischargeService;
 
     public SyncController(FollowUpService followUpService, 
@@ -52,7 +52,7 @@ public class SyncController {
         this.followUpService = followUpService;
         this.anganwaadiWorkerService = anganwaadiWorkerService;
         this.patientService = patientService;
-        this.healthStatusService = healthStatusService;
+        // this.healthStatusService = healthStatusService;
         this.dischargeService = dischargeService;
     }
 

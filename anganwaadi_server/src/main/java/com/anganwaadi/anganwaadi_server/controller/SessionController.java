@@ -2,8 +2,7 @@ package com.anganwaadi.anganwaadi_server.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.lang.System;
-import java.lang.Long;
+// import java.lang.Long;
 
 import com.anganwaadi.anganwaadi_server.classes.AnganwadiWorker;
 import com.anganwaadi.anganwaadi_server.classes.RegistrationDetails;
@@ -14,16 +13,17 @@ import com.anganwaadi.anganwaadi_server.service.AnganwaadiWorkerService;
 import com.anganwaadi.anganwaadi_server.service.RegistrationDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+// import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +43,7 @@ public class SessionController {
     
     private RegistrationDetailsService regService;
     private AnganwaadiWorkerService anganwaadiWorkerService;
-    private Boolean loggedIn;
+    // private Boolean loggedIn;
     private AnganwadiWorker loggedWorker;
 
     @Autowired
@@ -59,7 +59,7 @@ public class SessionController {
     public SessionController(RegistrationDetailsService regService, AnganwaadiWorkerService anganwaadiWorkerService){
         this.regService = regService;
         this.anganwaadiWorkerService = anganwaadiWorkerService;
-        this.loggedIn = false;
+        // this.loggedIn = false;
         this.loggedWorker = null;
     }
 
@@ -104,9 +104,10 @@ public class SessionController {
         if (regDetails.isPresent()){
             
             RegistrationDetails details = regDetails.get();
-
-            if( details.getPassword().equals(dto.getPassword()) ){
-                this.loggedIn = true;
+            
+            
+            if( BCrypt.checkpw(dto.getPassword(), details.getPassword()) ){
+                // this.loggedIn = true;
 
                 // fetch the loggedWorker details and send the aww_id across
                 // this.loggedWorker = findLoggedAngWorker(details);

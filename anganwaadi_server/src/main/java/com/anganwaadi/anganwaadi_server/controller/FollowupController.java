@@ -1,6 +1,5 @@
 package com.anganwaadi.anganwaadi_server.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import com.anganwaadi.anganwaadi_server.service.AnganwaadiWorkerService;
@@ -22,8 +21,8 @@ import com.anganwaadi.anganwaadi_server.controller.DTO.*;
 public class FollowupController {
    
     private FollowUpService followUpService;
-    private AnganwaadiWorkerService anganwaadiWorkerService;
-    private PatientService patientService;
+    // private AnganwaadiWorkerService anganwaadiWorkerService;
+    // private PatientService patientService;
     private HealthStatusService healthStatusService;
 
 
@@ -32,8 +31,8 @@ public class FollowupController {
         PatientService patientService,
         HealthStatusService healthStatusService){
         this.followUpService = followUpService;
-        this.anganwaadiWorkerService = anganwaadiWorkerService;
-        this.patientService = patientService;
+        // this.anganwaadiWorkerService = anganwaadiWorkerService;
+        // this.patientService = patientService;
         this.healthStatusService = healthStatusService;
     }
 
